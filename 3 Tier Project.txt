@@ -189,5 +189,4 @@ aws configure (Default profile)
 aws configure --profile <desired profile name> 
 
 
-git token:
-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
+Note: use git token for git login instead of password.
