@@ -1,6 +1,5 @@
 CRM Application Project
 =======================
-***Day-01***
 
 1. Frontend 
 2. Backend
@@ -14,7 +13,6 @@ CRM Application Project
 
 ==DevOps Support==
 --> Domain name: CRM dyl.com (provided by client)
---> Team Size: 13 Members (5 Developers, 3 Testers, 3 DevOps and 2 PM) 
 
 
 ==Infra==
@@ -47,31 +45,6 @@ Hybrid
 --> Kubectl
 --> AWS CLI
 --> Docker
-
-
-***Day-2****
-
-prerequisites:
-  Jenkins server
-  docker
-  awscli
-  kubectl 
-  maven
-
-
-Backend code repo
-https://github.com/mayurmwagh/combine-project-backend/tree/feature
-
-Frontend code repo
-https://github.com/mayurmwagh/combine-project-frontend/tree/dev
-
-Consolidated code
-https://github.com/cloud-blitz/angular-java
-
-
-Infrastuture Code Repo
-https://github.com/mayurmwagh/cbz-three-tier-infra
-
 
 -----------------------------------------------------------------------
 
@@ -190,3 +163,4 @@ aws configure --profile <desired profile name>
 
 
 Note: use git token for git login instead of password.
+Use t2.large instance for jenkins server.
