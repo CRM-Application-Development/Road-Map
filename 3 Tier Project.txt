@@ -1,0 +1,193 @@
+CRM Application Project
+=======================
+***Day-01***
+
+1. Frontend 
+2. Backend
+3. Database
+
+==Technologies Stack (Tech Stack)==
+1. Frontend Technologies: Angular, Node.js, (Java Script)
+2. Backend Technologies: Spring Boot Framework (Java)
+3. Database: MySQL (RDS)
+
+
+==DevOps Support==
+--> Domain name: CRM dyl.com (provided by client)
+--> Team Size: 13 Members (5 Developers, 3 Testers, 3 DevOps and 2 PM) 
+
+
+==Infra==
+Hybrid
+--> Serverless (S3 for Frontend)
+--> EKS (Backend)
+--> Database
+
+==DevOps Tools==
+--> AWS
+--> Jenkins
+--> Git
+--> IaC Tool
+--> EKS
+--> RDS
+--> Maven
+--> Docker
+
+
+==Brnching Strategies==
+--> Dev --- Dev Environment
+--> Test --- Test Environment
+--> UAT --- UAT Environment
+--> Prod --- Prod Environment
+
+
+==Requirements (Prerequisites)==
+--> Jenkins server
+--> EKS Cluster
+--> Kubectl
+--> AWS CLI
+--> Docker
+
+
+***Day-2****
+
+prerequisites:
+  Jenkins server
+  docker
+  awscli
+  kubectl 
+  maven
+
+
+Backend code repo
+https://github.com/mayurmwagh/combine-project-backend/tree/feature
+
+Frontend code repo
+https://github.com/mayurmwagh/combine-project-frontend/tree/dev
+
+Consolidated code
+https://github.com/cloud-blitz/angular-java
+
+
+Infrastuture Code Repo
+https://github.com/mayurmwagh/cbz-three-tier-infra
+
+
+-----------------------------------------------------------------------
+
+==== Steps to configure Database ====
+--> mysql -h <endpoint> -u admin -pRedhat123
+--> show databases;
+--> create database springbackend;
+--> use springbackend;
+--> show tables;
+--> exit
+# to import sql file in database
+--> git clone <repo link>
+--> cd <repo name>
+--> mysql -h endpoint -u admin -pRedhat123 springbackend < springbackend.sql 
+--> mysql -h endpoint -u admin -pRedhat123
+--> show databases;
+--> use springbackend;
+--> show tables;
+--> select * from tbl_workers;
+--> exit
+
+
+==== Steps to perform Backend deployment ====
+
+### Instalation of tools
+
+(1) Installation Older version of jenkins (java-11 supported):
+sudo wget -O /usr/share/keyrings/jenkins-keyring.asc   https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key
+echo "deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc]"   https://pkg.jenkins.io/debian-stable binary/ | sudo tee   /etc/apt/sources.list.d/jenkins.list > /dev/null
+apt update -y
+sudo apt-cache madison jenkins
+apt install openjdk-11-jre -y
+apt install jenkins=2.426.1 -y
+systemctl start jenkins
+systemctl enable jenkins
+systemctl status jenkins
+
+(2) Install aws cli
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+ls
+apt install unzip -y
+unzip awscliv2.zip
+sudo ./aws/install
+      
+(3) Installation of Docker
+apt install docker.io -y
+      
+(4) Installation Kubectl
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+kubectl version --client
+
+(5) Maven installation
+apt install maven -y
+
+### Integration these tools with jenkins ###      
+      
+(1) docker login 
+# copy hidden folders
+--> cp -R ./.docker /var/lib/jenkins 
+      
+(2) aws configure
+--> cp -R ./.aws /var/lib/jenkins
+
+(3) update kubeconfig     
+aws eks update-kubeconfig --region us-east-2  --name cbz-cluster
+cp -R ./.kube /var/lib/jenkins
+
+(4) changing persmissons
+--> chown -R jenkins:jenkins /var/lib/jenkins 
+
+# add jenkins user to docker group
+gpasswd -a jenkins docker
+sudo chown jenkins:docker /var/run/docker.sock
+su jenkins
+aws eks update-kubeconfig --region us-east-2 --name cbz-cluster
+kubectl get nodes
+exit
+systemctl restart jenkins
+
+### Now clone the code from github
+
+--> git clone <backend code repo>
+--> src>main>resources>application #add database endpoint, user name and password
+--> create jenkins.jdp, deployment.yml file and service.yml files
+--> git status
+--> git add .
+--> git commit -m ""
+--> git push origin main
+
+## Create pipeline and run
+
+
+==== Steps to perform Frontend deployment ====
+
+git clone <frontend code repo>
+follow READ.md filess
+create jenkins.jdp
+aws s3 --recursive dist/angular-frontend/ s3://<s3 bucket name>/
+
+
+# add LoadBalancer endpoint in file.
+su jenkins
+get svc
+
+frontend repo>src>app>services>worker.service.rs>privateurl
+
+git add .
+git commit -m ""
+git push origin main
+
+
+==============================================
+aws configure (Default profile)
+aws configure --profile <desired profile name> 
+
+
+git token:
+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
