@@ -6,7 +6,7 @@ CRM Application Project
 3. Database
 
 ==Technologies Stack (Tech Stack)==
-1. Frontend Technologies: Angular, Node.js, (Java Script)
+1. Frontend Technologies: Angular (Java Script)
 2. Backend Technologies: Spring Boot Framework (Java)
 3. Database: MySQL (RDS)
 
